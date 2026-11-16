@@ -15,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (strlen($password) < 4) {
         $error = "Password must be at least 4 characters.";
     } else {
-
         $check = $conn->prepare("SELECT id FROM users WHERE username = ?");
         $check->bind_param("s", $username);
         $check->execute();
@@ -24,7 +23,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check->num_rows > 0) {
             $error = "Username is already taken.";
         } else {
-
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
             $stmt->bind_param("ss", $username, $hashed_password);
